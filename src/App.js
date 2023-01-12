@@ -1,36 +1,55 @@
-import React from "react"
-import Question from "./components/Question"
+import {Fragment, useState, useEffect} from "react"
+import Question from "./components/question/question.component"
+import Answer from "./components/answer/answer.component"
 import { nanoid } from "nanoid"
 
-export default function App(){
+const App = () => {
 
-  const [questions, setQuestions] = React.useState([])
+  const [questions, setQuestions] = useState([])
+  const [userAnswers, setUserAnswers] = useState([])
 
  
-  function getQuestions() {
+  const getQuestions = () => {
     fetch(
 		"https://opentdb.com/api.php?amount=5&category=9&type=multiple&encode=url3986"
 	)
 		.then((res) => res.json())
-		.then((data) => setQuestions(data.results))
+		.then((data) => setQuestions(data.results.map(question => {
+      return {...question, id: nanoid()}
+
+    }) 
+    ))
   }
 
   
-
-  React.useEffect(function () {
+  useEffect(function () {
 		getQuestions()
   }, [])
 
+  const handleAnswerClick = (event) => {
+    setUserAnswers([...userAnswers, event.target.id])
+    console.log(userAnswers)
+  }
+
+
  const questionElements = questions.map(q => {
-    const answers = []
-    answers.push(decodeURIComponent(q.correct_answer))
-    q.incorrect_answers.map((answer) => answers.push(decodeURIComponent(answer)))
+    const randomAnswers = []
+    randomAnswers.push({answer: decodeURIComponent(q.correct_answer), id: nanoid()})
+    q.incorrect_answers.map((answer) =>
+		  randomAnswers.push({answer: decodeURIComponent(answer), id: nanoid()})
+    )
     
-    return (
-		<Question
-			question={decodeURIComponent(q.question)}
-			answers={answers}
-		/>
+   return (
+		<Fragment>
+			<Question
+				question={decodeURIComponent(q.question)}
+				id={q.id}
+			/>
+			<Answer 
+        onClickHandler={handleAnswerClick}
+        answers={randomAnswers}
+       />
+		</Fragment>
 	)
   })
 
@@ -40,3 +59,5 @@ export default function App(){
     </main> 
     )
 }
+
+export default App
