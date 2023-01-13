@@ -10,7 +10,7 @@
                         className="answer" 
                         key={answer.id} 
                         id={answer.id}
-                        onClick={onClickHandler}
+                        onClick={event => {onClickHandler(event, answer.correct)}}
                         >
 							{answer.answer}
 						</p>
