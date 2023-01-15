@@ -1,8 +1,7 @@
 
 
- const Answer = (props) => {
-	const {answers, onClickHandler} = props
-    return (
+ const Answer = ({answers, onClickHandler}) => {
+	return (
 		<div className='answers-container' >
 				{answers.map((answer) => {
 					return (

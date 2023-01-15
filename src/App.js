@@ -6,6 +6,7 @@ import { nanoid } from "nanoid"
 const App = () => {
 	const [questions, setQuestions] = useState([])
 	const [answers, setAnswers] = useState([])
+	const [isSelected, setIsSelected] = useState([])
 
 	const getQuestions = () => {
 		fetch(
@@ -16,7 +17,27 @@ const App = () => {
 				setQuestions(
 					data.results.map((question) => {
 						const id = data.results.indexOf(question)
-						return { ...question, id: id }
+						const answers = []
+						answers.push({
+							answer: decodeURIComponent(question.correct_answer),
+							id: `q${id}`,
+							correct: true,
+						})
+						question.incorrect_answers.map((answer) =>
+							answers.push({
+								answer: decodeURIComponent(answer),
+								id: `q${id}_${nanoid()}`,
+								correct: false,
+							})
+						)
+						const randomAnswers = answers.sort(
+							(a, b) => 0.5 - Math.random()
+						)
+						return {
+							...question,
+							id: id,
+							randomAnswers: randomAnswers,
+						}
 					})
 				)
 			)
@@ -26,27 +47,31 @@ const App = () => {
 		getQuestions()
 	}, [])
 
+	
+
 	const handleAnswerClick = (event, isCorrect) => {
-		isCorrect ? console.log("Correct") : console.log("Wrong")
-		console.log(event.target.id)
-	}
+		
+		setIsSelected((prevIsSelected) => {
+			if (prevIsSelected.includes(event.target.id)) {
+				event.target.style.backgroundColor = "#FFF"
+				return prevIsSelected.filter(item => item !== event.target.id)
+			} else{
+				event.target.style.backgroundColor = "#D6DBF5"
+				return [...prevIsSelected, event.target.id]
+			}
+				
+		})
+		// setAnswers(prevAnswers => {
+		// 	const qId = event.target.id.substring(0, 3)
+		// 	if (!prevAnswers.includes(qId)) {
+		// 		return [...prevAnswers, event.target.id]
+		// 	}
+	
+		// 	})
+		}
+	
 
 	const questionElements = questions.map((q) => {
-		const answers = []
-		answers.push({
-			answer: decodeURIComponent(q.correct_answer),
-			id: `q${q.id}`,
-			correct: true,
-		})
-		q.incorrect_answers.map((answer) =>
-			answers.push({
-				answer: decodeURIComponent(answer),
-				id: nanoid(),
-				correct: false,
-			})
-		)
-		const randomAnswers = answers.sort((a, b) => 0.5 - Math.random())
-
 		return (
 			<Fragment key={q.id}>
 				<Question
@@ -55,7 +80,7 @@ const App = () => {
 				/>
 				<Answer
 					onClickHandler={handleAnswerClick}
-					answers={randomAnswers}
+					answers={q.randomAnswers}
 				/>
 			</Fragment>
 		)

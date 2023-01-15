@@ -1,11 +1,8 @@
 
 
-const Question = (props) => {
-	const {question, id} = props
-	
-    return (
+const Question = ({question, id}) => {
+	return (
 		<h2 className="question" key={id}>{question}</h2>
-		
 	)
 }
 
