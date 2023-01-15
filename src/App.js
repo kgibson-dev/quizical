@@ -16,15 +16,17 @@ const App = () => {
 			.then((data) =>
 				setQuestions(
 					data.results.map((question) => {
-						const id = data.results.indexOf(question)
+						const id = data.results.indexOf(question) + 1
 						const answers = []
 						answers.push({
+							question: id,
 							answer: decodeURIComponent(question.correct_answer),
 							id: `q${id}`,
 							correct: true,
 						})
 						question.incorrect_answers.map((answer) =>
 							answers.push({
+								question: id,
 								answer: decodeURIComponent(answer),
 								id: `q${id}_${nanoid()}`,
 								correct: false,
@@ -48,26 +50,24 @@ const App = () => {
 	}, [])
 
 	
-
-	const handleAnswerClick = (event, isCorrect) => {
+	
+	const handleAnswerClick = (event, isCorrect, question) => {
 		
 		setIsSelected((prevIsSelected) => {
 			if (prevIsSelected.includes(event.target.id)) {
+				
 				event.target.style.backgroundColor = "#FFF"
 				return prevIsSelected.filter(item => item !== event.target.id)
 			} else{
+				setAnswers((prevAnswers) => {
+					return [...prevAnswers, event.target.id]
+				})
 				event.target.style.backgroundColor = "#D6DBF5"
 				return [...prevIsSelected, event.target.id]
 			}
 				
 		})
-		// setAnswers(prevAnswers => {
-		// 	const qId = event.target.id.substring(0, 3)
-		// 	if (!prevAnswers.includes(qId)) {
-		// 		return [...prevAnswers, event.target.id]
-		// 	}
-	
-		// 	})
+		
 		}
 	
 
