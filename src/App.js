@@ -52,29 +52,35 @@ const App = () => {
 	
 	
 	const handleAnswerClick = (event, isCorrect, question) => {
-		setAnswers((prevAnswers) =>{
-			if(prevAnswers.length === 0) {
-				return [...prevAnswers, { question: question, id: event.target.id }]
-		}
-		}
-			
-			// prevAnswers.map((answer) => {
-			// 	console.log(answer.question)
-				// if (answer.question === question) {
-				// 	answer.id = event.target.id
-				// }
-	
-				
-			// })
-		)
+		// setAnswers((prevAnswers) =>{
+		// 	if(prevAnswers.length === 0) {
+		// 		return [...prevAnswers, { question: question, id: event.target.id }]
+		// 	} else {
+		// 		const updatedAnswers = prevAnswers.filter(
+		// 			(answer) => answer.question !== question
+		// 		)
+		// 		updatedAnswers.push({ question: question, id: event.target.id })
+		// 			return updatedAnswers
+		// 	}
+		// })
+		
 		
 		setIsSelected((prevIsSelected) => {
-			if (prevIsSelected.includes(event.target.id)) {
+			if (prevIsSelected.includes(question)) {
 				event.target.style.backgroundColor = "#FFF"
 				return prevIsSelected.filter(item => item !== event.target.id)
 			} else{
 				event.target.style.backgroundColor = "#D6DBF5"
-				return [...prevIsSelected, event.target.id]
+				const updatedIsSelected = prevIsSelected.filter(
+					(answer) => answer.question !== question
+				)
+				updatedIsSelected.push({
+					question: question,
+					id: event.target.id,
+				})
+				
+					return updatedIsSelected
+		
 			}
 		})
 
