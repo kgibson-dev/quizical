@@ -52,21 +52,32 @@ const App = () => {
 	
 	
 	const handleAnswerClick = (event, isCorrect, question) => {
+		setAnswers((prevAnswers) =>{
+			if(prevAnswers.length === 0) {
+				return [...prevAnswers, { question: question, id: event.target.id }]
+		}
+		}
+			
+			// prevAnswers.map((answer) => {
+			// 	console.log(answer.question)
+				// if (answer.question === question) {
+				// 	answer.id = event.target.id
+				// }
+	
+				
+			// })
+		)
 		
 		setIsSelected((prevIsSelected) => {
 			if (prevIsSelected.includes(event.target.id)) {
-				
 				event.target.style.backgroundColor = "#FFF"
 				return prevIsSelected.filter(item => item !== event.target.id)
 			} else{
-				setAnswers((prevAnswers) => {
-					return [...prevAnswers, event.target.id]
-				})
 				event.target.style.backgroundColor = "#D6DBF5"
 				return [...prevIsSelected, event.target.id]
 			}
-				
 		})
+
 		
 		}
 	
