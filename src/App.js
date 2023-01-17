@@ -52,46 +52,54 @@ const App = () => {
 	
 	
 	const handleAnswerClick = (event, isCorrect, question) => {
-		setAnswers((prevAnswers) =>{
-			if(prevAnswers.length === 0) {
-				return [...prevAnswers, { question: question, id: event.target.id }]
-			} else {
-				const updatedAnswers = prevAnswers.filter(
-					(answer) => answer.question !== question
-				)
-				updatedAnswers.push({ question: question, id: event.target.id })
-					return updatedAnswers
-			}
-		})
+		setAnswers({...answers, [question]: event.target.id})
+		// setAnswers((prevAnswers) =>{
+		// 	if(prevAnswers.length === 0) {
+		// 		return [...prevAnswers, { question: question, id: event.target.id }]
+		// 	} else {
+		// 		const updatedAnswers = prevAnswers.filter(
+		// 			(answer) => answer.question !== question
+		// 		)
+		// 		updatedAnswers.push({ question: question, id: event.target.id })
+		// 			return updatedAnswers
+		// 	}
+		// })
 		
 		
 		setIsSelected((prevIsSelected) => {
-			if (prevIsSelected.includes(s.question)) {
-				event.target.style.backgroundColor = "#FFF"
-				return prevIsSelected.filter(item => item !== event.target.id)
-			} else{
-				
-				const updatedIsSelected = prevIsSelected.filter(
-					(answer) => answer.question !== question
-				)
-				event.target.style.backgroundColor = "#D6DBF5"
-				updatedIsSelected.push({
-					question: question,
-					id: event.target.id,
-				})
-					
-					return updatedIsSelected
-		
-			})
+
+			// 	if(prevIsSelected.length === 0){
+			// 		return [{ id: event.target.id, isHeld: true }]
+			// 	} else {
+			// 		prevIsSelected.map(item => {
+			// 		return item.id === event.target.id
+			// 			? { ...prevIsSelected, isHeld: true}
+			// 			: item
+
+			// 	})
+			// }
+
+			// if (prevIsSelected.includes(s.question)) {
+			// 	event.target.style.backgroundColor = "#FFF"
+			// 	return prevIsSelected.filter(item => item !== event.target.id)
+			// } else{
+
+			// const updatedIsSelected = prevIsSelected.filter(
+			// 	(answer) => answer.question !== question
+			// )
+			// // event.target.style.backgroundColor = "#D6DBF5"
+			// updatedIsSelected.push({
+			// 	question: question,
+			// 	id: event.target.id,
+			// })
+
+			// return updatedIsSelected
 		})
-	}
+
 			
-		
-
-		
-		
+		}	
 	
-
+			
 	const questionElements = questions.map((q) => {
 		return (
 			<Fragment key={q.id}>
@@ -102,6 +110,7 @@ const App = () => {
 				<Answer
 					onClickHandler={handleAnswerClick}
 					answers={q.randomAnswers}
+					isSelected={isSelected}
 				/>
 			</Fragment>
 		)

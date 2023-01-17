@@ -1,6 +1,8 @@
 
 
- const Answer = ({answers, onClickHandler}) => {
+ const Answer = ({answers, onClickHandler, isSelected}) => {
+	// console.log(isSelected)
+	// const styles = {backgroundColor: isSelected.id ? "#D6DBF5" : "#FFF"}
 	return (
 		<div className='answers-container' >
 				{answers.map((answer) => {
@@ -9,6 +11,7 @@
                         className="answer" 
                         key={answer.id} 
                         id={answer.id}
+						// style={styles}
                         onClick={event => {onClickHandler(event, answer.correct, answer.question)}}
                         >
 							{answer.answer}
