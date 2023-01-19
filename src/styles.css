@@ -9,7 +9,7 @@ body {
     color: #293264;
     /* font-family: 'Inter', sans-serif; */
     font-family: 'Karla', sans-serif;
-    
+    background: #F5F7FB;
     line-height: 1.5;
 }
 
@@ -38,11 +38,39 @@ img {
     font-size: 1rem;
 }
 
+.quiz-title{
 
+}
+
+.all-buttons{
+    background: #4D5B9E;
+    border: none;
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 1rem;
+    color: #F5F7FB;
+    padding: 15px 30px;
+    font-weight: 500;
+}
+
+.all-buttons:hover  {
+  
+  box-shadow: 0 2px #666;
+  transform: translateY(4px);
+}
 
 /* =================
     Layout
    ================= */
+
+.start-page{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
 
 .answers-container{
     display: flex;
@@ -50,69 +78,13 @@ img {
 
 }
    
-.main {
+main {
     width: 90%;
     max-width: 900px;
     margin: 0 auto;
+    /* height: 100%; */
 }
 
-
-
-
-
-/* header {
-    padding: 2em 0 1em;
-    background-color: #f3efef;
-}
-
-
-
-footer {
-    text-align: center;
-    font-size: 0.75rem;
-    background-color: #0e1f3b;
-    margin: 2rem 0 0;
-    color: rgba(255,255,255, .65);
-    padding: 1rem;
-    line-height: 0.3;
-} */
-
-
-/* navigation */
-
-/* .nav-list {
-    list-style: none;
-    padding: 0;
-    align-items: center;
-    text-transform: uppercase;
-    font-size: 0.85rem;
-}
-
-.nav-list-item {
-    padding: 0;
-    margin: 0.5em 0;
-}
-
-.nav-link {
-    text-decoration: none;
-    color: #707070;
-    padding: .25em 0;
-    letter-spacing: 1px;
-}
-
-.nav-link:hover,
-.nav-link:focus {
-    color: #1792d2;
-}
-
-.current-page {
-    border-bottom: 1px solid #707070;
-}
-
-.current-page:hover,
-.current-page:focus {
-    color: #707070;
-} */
 
 
 

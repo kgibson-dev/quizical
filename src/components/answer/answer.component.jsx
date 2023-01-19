@@ -1,25 +1,16 @@
 
 
- const Answer = ({answers, onClickHandler, isSelected}) => {
-	// console.log(isSelected)
-	// const styles = {backgroundColor: isSelected.id ? "#D6DBF5" : "#FFF"}
+ const Answer = (props) => {
+	const styles = props.isSelected ? {backgroundColor: "#d6dbf5"} : {backgroundColor: "#FFFFFF"}
 	return (
-		<div className='answers-container' >
-				{answers.map((answer) => {
-					return (
-						<p 
-                        className="answer" 
-                        key={answer.id} 
-                        id={answer.id}
-						// style={styles}
-                        onClick={event => {onClickHandler(event, answer.correct, answer.question)}}
-                        >
-							{answer.answer}
-						</p>
-					)
-				})}
-			</div>
-		
+		<p 
+			className="answer" 
+			id={props.id}
+			style={styles}
+			onClick={() => {props.onClickHandler(props.questionId, props.id)}}
+			>
+				{props.answer}
+		</p>
 	)
 }
 

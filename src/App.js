@@ -1,12 +1,25 @@
-import {Fragment, useState, useEffect} from "react"
+import {useState, useEffect} from "react"
 import Question from "./components/question/question.component"
-import Answer from "./components/answer/answer.component"
+import Start from "./components/start/start.component"
+import CheckAnswers from "./components/checkAnswers/checkAnswers.component"
+
 import { nanoid } from "nanoid"
 
+
 const App = () => {
-	const [questions, setQuestions] = useState([])
-	const [answers, setAnswers] = useState([])
-	const [isSelected, setIsSelected] = useState([])
+	const [quiz, setQuiz] = useState([])
+	const [startGame, setStartGame] = useState(false)
+	
+	const shuffleAnswers = (answersToBeShuffled) => {
+		return answersToBeShuffled.sort((a, b) => 0.5 - Math.random())
+	}
+
+	const handleStartGameClick = (startGameState) => {
+		setTimeout(() => {
+			return setStartGame(startGameState)
+		}, "500")
+		
+	}
 
 	const getQuestions = () => {
 		fetch(
@@ -14,31 +27,29 @@ const App = () => {
 		)
 			.then((res) => res.json())
 			.then((data) =>
-				setQuestions(
-					data.results.map((question) => {
-						const id = data.results.indexOf(question) + 1
+				setQuiz(
+					data.results.map((question, index) => {
 						const answers = []
 						answers.push({
-							question: id,
+							question: index + 1,
 							answer: decodeURIComponent(question.correct_answer),
-							id: `q${id}`,
-							correct: true,
+							id: nanoid(),
+							isCorrect: true,
+							isSelected: false,
 						})
 						question.incorrect_answers.map((answer) =>
 							answers.push({
-								question: id,
+								question: index + 1,
 								answer: decodeURIComponent(answer),
-								id: `q${id}_${nanoid()}`,
-								correct: false,
+								id: nanoid(),
+								isCorrect: false,
+								isSelected: false,
 							})
-						)
-						const randomAnswers = answers.sort(
-							(a, b) => 0.5 - Math.random()
 						)
 						return {
 							...question,
-							id: id,
-							randomAnswers: randomAnswers,
+							id: index + 1,
+							randomAnswers: shuffleAnswers(answers),
 						}
 					})
 				)
@@ -51,72 +62,53 @@ const App = () => {
 
 	
 	
-	const handleAnswerClick = (event, isCorrect, question) => {
-		setAnswers({...answers, [question]: event.target.id})
-		// setAnswers((prevAnswers) =>{
-		// 	if(prevAnswers.length === 0) {
-		// 		return [...prevAnswers, { question: question, id: event.target.id }]
-		// 	} else {
-		// 		const updatedAnswers = prevAnswers.filter(
-		// 			(answer) => answer.question !== question
-		// 		)
-		// 		updatedAnswers.push({ question: question, id: event.target.id })
-		// 			return updatedAnswers
-		// 	}
-		// })
-		
-		
-		setIsSelected((prevIsSelected) => {
-
-			// 	if(prevIsSelected.length === 0){
-			// 		return [{ id: event.target.id, isHeld: true }]
-			// 	} else {
-			// 		prevIsSelected.map(item => {
-			// 		return item.id === event.target.id
-			// 			? { ...prevIsSelected, isHeld: true}
-			// 			: item
-
-			// 	})
-			// }
-
-			// if (prevIsSelected.includes(s.question)) {
-			// 	event.target.style.backgroundColor = "#FFF"
-			// 	return prevIsSelected.filter(item => item !== event.target.id)
-			// } else{
-
-			// const updatedIsSelected = prevIsSelected.filter(
-			// 	(answer) => answer.question !== question
-			// )
-			// // event.target.style.backgroundColor = "#D6DBF5"
-			// updatedIsSelected.push({
-			// 	question: question,
-			// 	id: event.target.id,
-			// })
-
-			// return updatedIsSelected
+	const handleAnswerClick = (questionId, id) => {
+		const updatedQuiz = quiz.map(question => {
+			if(questionId === question.id) {
+				const updatedAnswers = question.randomAnswers.map(answer => {
+					if(answer.id === id) {
+						return{...answer, isSelected:true}
+					} else {
+						return {...answer, isSelected:false}
+					}
+				})
+				return {...question, randomAnswers: updatedAnswers}
+			} else {
+				return {...question}
+			}
+			
 		})
+		setQuiz(prevQuiz => updatedQuiz)
+	}	
 
 			
-		}	
-	
-			
-	const questionElements = questions.map((q) => {
+	const quizElements = quiz.map((q, index) => {
 		return (
-			<Fragment key={q.id}>
-				<Question
+			<Question
+					key={index+1}
 					question={decodeURIComponent(q.question)}
-					id={`q${q.id}`}
-				/>
-				<Answer
+					id={index+1}
 					onClickHandler={handleAnswerClick}
 					answers={q.randomAnswers}
-					isSelected={isSelected}
 				/>
-			</Fragment>
+			
 		)
 	})
 
-	return <main>{questionElements}</main>
+	// const startGameElements = 
+
+	return (
+		<main>
+			{!startGame && (
+				<Start
+					startGame={startGame}
+					onClickHandler={handleStartGameClick}
+				/>
+			)}
+			{startGame && quizElements}
+			{startGame && <CheckAnswers />}
+		</main>
+	)
 }
 
 export default App
