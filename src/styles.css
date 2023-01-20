@@ -33,13 +33,23 @@ img {
     cursor: pointer;
 }
 
+.answer[disabled]{
+    pointer-events: none;
+}
+
 .question{
     font-weight: 700;
     font-size: 1rem;
 }
 
-.quiz-title{
+.quiz-subtitle{
+    margin: 10px;
+    font-size: 1rem;
+   
+}
 
+.quiz-title{
+    margin: 10px;
 }
 
 .all-buttons{
@@ -50,14 +60,22 @@ img {
     cursor: pointer;
     font-size: 1rem;
     color: #F5F7FB;
-    padding: 15px 30px;
+    padding: 10px 30px;
     font-weight: 500;
 }
 
 .all-buttons:hover  {
   
   box-shadow: 0 2px #666;
-  transform: translateY(4px);
+  transform: translateY(2px);
+}
+
+.score{
+    font-weight: 700;
+}
+
+hr{
+    border: 1px solid #DBDEF0;
 }
 
 /* =================
@@ -72,21 +90,44 @@ img {
     height: 100vh;
 }
 
-.answers-container{
+.answers-container,
+.scores-container,
+.button-container{
     display: flex;
     gap: 20px;
+    align-items: center;
+}
 
+.scores-container,
+.button-container{
+    justify-content: center;
 }
    
 main {
     width: 90%;
     max-width: 900px;
-    margin: 0 auto;
-    /* height: 100%; */
+    margin: 40px auto;
 }
 
+.options{
+    display: flex;
+    flex-direction: column;
+    
+}
 
+.options-container{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
 
+.all-buttons{
+    margin: 20px 0;
+}
+
+.start-label {
+    margin-bottom: 5px;
+}
 
 
 /* =================

@@ -12,6 +12,7 @@ const Question = (props) => {
 				isCorrect={answer.isCorrect}
 				onClickHandler={props.onClickHandler}
 				questionId={props.id}
+				checkAnswers={props.checkAnswers}
 			/>
 		)
 	})
@@ -20,6 +21,7 @@ const Question = (props) => {
 		<div className='questions-container' key={props.id}>
 			<h2 className="question" id={props.id}>{props.question}</h2>
 			<div className='answers-container' >{answersDisplay}</div>
+			<hr></hr>
 		</div>
 	)
 }
