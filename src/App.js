@@ -15,11 +15,12 @@ const App = () => {
 	const [checkAnswers, setCheckAnswers] = useState(false)
 	const [quizOptions, setQuizOptions] = useState({noOfQuestions: 5, category: 9, difficulty: ''})
 	
+	
 	const shuffleAnswers = (answersToBeShuffled) => {
 		return answersToBeShuffled.sort((a, b) => 0.5 - Math.random())
 	}
 
-	const handleStartGameClick = (startGameState, selectedOptions) => {
+	const handleStartGameClick = (startGameState, selectedOptions, name) => {
 		setQuizOptions(selectedOptions)
 		setTimeout(() => {
 			return setStartGame(startGameState)

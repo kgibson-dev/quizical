@@ -8,7 +8,8 @@ const Start = (props) => {
             noOfQuestions: 5,
             difficulty: ""
         }
-    )
+        )
+    const [name, setName] = useState("")
 
     const getCategories = () => {
 		fetch("https://opentdb.com/api_category.php")
@@ -99,7 +100,7 @@ const Start = (props) => {
             
             
             
-            <button className="all-buttons" onClick={()=> props.onClickHandler(true, selectedOptions)}>Start Quiz</button>
+            <button className="all-buttons" onClick={()=> props.onClickHandler(true, selectedOptions, name)}>Start Quiz</button>
         </div>
         
     )
