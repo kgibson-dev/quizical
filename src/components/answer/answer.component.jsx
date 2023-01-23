@@ -13,7 +13,6 @@
 		} else if (!props.isCorrect && !props.isSelected){
 			styles = {opacity: 0.75, color: "white"}
 		}
-		
 	} else {
 		styles = props.isSelected ? {backgroundColor: "#ec7f0e", border: "none"} : {backgroundColor: "#b2b4c4"}
 	}

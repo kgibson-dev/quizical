@@ -7,18 +7,14 @@ const Start = (props) => {
 
     const handleNameClick = () => {
         setName(document.getElementById("name-input").value)
-       
     }
 
-    
-return (
+    return (
         <div className="start-page">
-            
             {!name && <div className="start-page">
                 <h2 className="quiz-subtitle">Welcome to Quizzical</h2>
                 <label htmlFor="name-input">Please enter your name to start</label>
                 <input id="name-input" autoFocus></input>
-                
             </div>}
             {!name && <button className="all-buttons" onClick={handleNameClick}>Let's go!</button>}
             {name && <QuizOptions 
@@ -27,9 +23,7 @@ return (
                 />
             }
         </div>
-        
     )
-
 }
 
 export default Start 
