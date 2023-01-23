@@ -20,19 +20,19 @@ const App = () => {
 		return answersToBeShuffled.sort((a, b) => 0.5 - Math.random())
 	}
 
-	const handleStartGameClick = (startGameState, selectedOptions, name) => {
-		setQuizOptions(selectedOptions)
-		setTimeout(() => {
-			return setStartGame(startGameState)
-		}, "500")
-	}
+	
 
 	const getQuestions = () => {
 		
 		fetch(
 			`https://opentdb.com/api.php?amount=${quizOptions.noOfQuestions}&category=${quizOptions.category}&difficulty=${quizOptions.difficulty}&type=multiple&encode=url3986`
 		)
-			.then((res) => res.json())
+			.then((res) => {
+				if (!res.ok) {
+					throw Error("Quiz data not available")
+				}
+				return res.json()
+			})
 			.then((data) =>
 				setQuiz(
 					data.results.map((question, index) => {
@@ -67,7 +67,13 @@ const App = () => {
 		getQuestions()
 	}, [playAgain, startGame])
 
-	
+	const handleStartGameClick = (startGameState, selectedOptions, name) => {
+		localStorage.setItem("playerName", name)
+		setQuizOptions(selectedOptions)
+		setTimeout(() => {
+			return setStartGame(startGameState)
+		}, "500")
+	}
 	
 	const handleAnswerClick = (questionId, id) => {
 		const updatedQuiz = quiz.map(question => {
@@ -128,6 +134,10 @@ const App = () => {
 
 	return (
 		<main>
+			<h1 className={!startGame ? "quiz-title centered" : "quiz-title" } >
+				🤔 Quizzical 🤔
+			</h1>
+			
 			{!startGame && (
 				<Start
 					startGame={startGame}
@@ -143,6 +153,7 @@ const App = () => {
 					onClickHandler={handlePlayAgainClick}
 					score={score}
 					noOfQuestions={quizOptions.noOfQuestions}
+					name={localStorage.getItem("playerName")}
 				/>
 			)}
 		</main>

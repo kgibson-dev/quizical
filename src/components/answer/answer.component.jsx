@@ -7,15 +7,15 @@
 	if(props.checkAnswers) {
 		disable=true
 		if(props.isCorrect){
-			styles = {backgroundColor: "#94D7A2", border: "none"}
+			styles = {backgroundColor: "#62cf79", border: "none"}
 		} else if (props.isSelected && !props.isCorrect){
-			styles = {backgroundColor: "#F8BCBC", border: "none", opacity: 0.5}
+			styles = {backgroundColor: "#e95858", border: "none", opacity: 0.5, color: "white"}
 		} else if (!props.isCorrect && !props.isSelected){
-			styles = {opacity: 0.5}
+			styles = {opacity: 0.75, color: "white"}
 		}
 		
 	} else {
-		styles = props.isSelected ? {backgroundColor: "#d6dbf5", border: "none"} : {backgroundColor: "#FFFFFF"}
+		styles = props.isSelected ? {backgroundColor: "#ec7f0e", border: "none"} : {backgroundColor: "#b2b4c4"}
 	}
 	
 	return (

@@ -6,9 +6,10 @@ html,
 body {
     margin: 0;
     padding: 0;
-    color: #293264;
+    color: white;
     font-family: 'Karla', sans-serif;
-    background: #F5F7FB;
+    background: #062d4f;
+    
     line-height: 1.5;
 }
 
@@ -26,6 +27,7 @@ img {
     font-size: 0.75rem;
     font-weight: 500;
     border: 1px solid #4D5B9E;
+    color: black;
     border-radius: 8px;
     padding: 5px 20px;
     text-align: center;
@@ -42,25 +44,30 @@ img {
 }
 
 .quiz-subtitle{
-    margin: 10px;
-    font-size: 1rem;
+    margin: 10px 0 0;
+    font-size: 1.5rem;
    
 }
 
 .quiz-title{
-    margin: 10px;
+    margin: 10px 0 10px;
+    font-size: 2.5rem;
+}
+
+.centered{
+    text-align: center;
 }
 
 .all-buttons{
-    background: #4D5B9E;
+    background: #ec7f0e;
     border: none;
     border-radius: 10px;
     text-align: center;
     cursor: pointer;
     font-size: 1rem;
-    color: #F5F7FB;
+    color: #FFF;
     padding: 10px 30px;
-    font-weight: 500;
+    font-weight: 700;
 }
 
 .all-buttons:hover  {
@@ -76,44 +83,51 @@ img {
 hr{
     border: 1px solid #DBDEF0;
 }
-select{
-    padding: 5px;
+select,
+input{
+    padding: 10px;
+    background: #b2b4c4;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: 500;
+    text-align: center;
+}
+
+
+label{
+    margin-bottom: 10px;
 }
 
 /* =================
     Layout
    ================= */
 
-.start-page{
+.start-page,
+.scores-container{
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    /* height: 100vh; */
 }
 
 .answers-container{
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    /* display: flex;
-    flex-direction: column; */
-    gap: 20px;
-    align-items: center;
-}
-
-.scores-container,
-.button-container{
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 10px;
     align-items: center;
-    justify-content: center;
+    
 }
+
    
 main {
     width: 90%;
     max-width: 900px;
     margin: 40px auto;
+    /* display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; */
 }
 
 .options{
@@ -129,7 +143,7 @@ main {
 }
 
 .all-buttons{
-    margin: 20px 0;
+    margin: 30px 0;
 }
 
 .start-label {
@@ -143,8 +157,15 @@ main {
 @media (min-width: 600px) {
     .answers-container
     {
-        grid-template-columns: repeat(4, 1fr);
-        
+        flex-direction: row;
+        gap: 20px;
     }
-    
+    .scores-container{
+        flex-direction: row;
+        gap: 20px;
+    }
+    .quiz-title{
+        margin: 10px 0 30px;
+        font-size: 2.5rem;
+    }
 }

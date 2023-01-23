@@ -1,4 +1,4 @@
-import {useState, useEffect} from "react"
+import {useState, useEffect, Fragment} from "react"
 
 
 const QuizOptions = (props) => {
@@ -12,7 +12,12 @@ const QuizOptions = (props) => {
         )
         const getCategories = () => {
             fetch("https://opentdb.com/api_category.php")
-                .then((res) => res.json())
+                .then((res) => {
+                    if (!res.ok) {
+                        throw Error("Category data not available")
+                    }
+                    return res.json()
+                })
                 .then(data => 
                     setCategoryList(data.trivia_categories)
                     )
@@ -41,10 +46,12 @@ const QuizOptions = (props) => {
             }
          })
      }
+    
 
     return (
-        <div>
-                <h2 className="quiz-subtitle">Hey Select from the options below and then click Start Quiz</h2>
+        <Fragment>
+            <h2 className="quiz-subtitle">Are you ready {props.name}!! </h2>
+                <p>Please select from the options below and then click Start Quiz</p>
             
                 <div className="options-container">
                 <div className="options">
@@ -93,8 +100,8 @@ const QuizOptions = (props) => {
                 </div>
                 </div>
                 <button className="all-buttons" onClick={()=> props.onClickHandler(true, selectedOptions, props.name)}>Start Quiz</button>
-        
-            </div>
+        </Fragment>
+                
             
             
             

@@ -7,18 +7,26 @@ const Start = (props) => {
 
     const handleNameClick = () => {
         setName(document.getElementById("name-input").value)
+       
     }
 
     
 return (
         <div className="start-page">
-            <h1 className="quiz-title" >Quizzical 🤔</h1>
-            {!name && <h2 className="quiz-subtitle">Welcome</h2>}
-            <label htmlFor="name-input">Please enter your name to start</label>
-            <input id="name-input"></input>
-            <button onClick={handleNameClick}>Let's go!</button>
-            {name && <QuizOptions name/>}
-            </div>
+            
+            {!name && <div className="start-page">
+                <h2 className="quiz-subtitle">Welcome to Quizzical</h2>
+                <label htmlFor="name-input">Please enter your name to start</label>
+                <input id="name-input" autoFocus></input>
+                
+            </div>}
+            {!name && <button className="all-buttons" onClick={handleNameClick}>Let's go!</button>}
+            {name && <QuizOptions 
+                name={name} 
+                onClickHandler={props.onClickHandler}
+                />
+            }
+        </div>
         
     )
 
