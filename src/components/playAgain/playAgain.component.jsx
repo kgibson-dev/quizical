@@ -1,3 +1,4 @@
+import Button from "../button/button.component"
 
 const PlayAgain = (props) => {
     let message
@@ -12,7 +13,12 @@ const PlayAgain = (props) => {
     return(
         <div className="scores-container">
             <p className="score">{message}</p>
-            <button className="all-buttons" onClick={()=> props.onClickHandler()}>Play again</button>
+            <Button 
+                classname={"all-buttons"}
+                onClickHandler={()=> props.onClickHandler()}
+                buttonText={"Play again"}
+            />
+            
         </div>
     )
 }

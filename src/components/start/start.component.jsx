@@ -1,5 +1,6 @@
 import {useState} from "react"
 import QuizOptions from "./quizOptions.component"
+import Button from "../button/button.component"
 
 const Start = (props) => {
     
@@ -16,7 +17,11 @@ const Start = (props) => {
                 <label htmlFor="name-input">Please enter your name to start</label>
                 <input id="name-input" autoFocus></input>
             </div>}
-            {!name && <button className="all-buttons" onClick={handleNameClick}>Let's go!</button>}
+            {!name && <Button 
+                classname={"all-buttons"}
+                onClickHandler={handleNameClick}
+                buttonText={"Let's go!"}
+            />}
             {name && <QuizOptions 
                 name={name} 
                 onClickHandler={props.onClickHandler}

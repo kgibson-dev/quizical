@@ -1,4 +1,6 @@
 import {useState, useEffect, Fragment} from "react"
+import Button from "../button/button.component"
+import Select from "./select.component"
 
 const QuizOptions = (props) => {
     const [categoryList, setCategoryList] = useState([])
@@ -9,6 +11,19 @@ const QuizOptions = (props) => {
             difficulty: ""
         }
     )
+
+    const noOfQuestions = [
+        {id: 5, name: 5},
+        {id: 10, name: 10},
+        {id: 15, name: 15}
+    ]
+
+    const difficulty = [
+        {id: "", name: "Mixed"},
+        {id: "easy", name: "Easy"},
+        {id: "medium", name: "Medium"},
+        {id: "hard", name: "Hard"}
+    ]
 
     const getCategories = () => {
         fetch("https://opentdb.com/api_category.php")
@@ -27,13 +42,16 @@ const QuizOptions = (props) => {
         getCategories()
     }, [])
 
-    const optionElements = categoryList.map((category, index) => {
-        return (
-            <option key={index} value={category.id}>{category.name}</option>
-        )
-    })
- 
+    const createOptionELements = (elArray) => {
+        return elArray.map((item, index) => {
+            return (
+                <option key={index} value={item.id}>{item.name}</option>
+            )
+        })
+    }
+
     const handleChange = (event) => {
+        console.log("changed")
         setSelectedOptions(prevSelectedOptions => {
             if(event.target.id === "categories") {
              return {...prevSelectedOptions, category: parseInt(event.target.value)}
@@ -52,52 +70,47 @@ const QuizOptions = (props) => {
                     <h2 className="quiz-subtitle">Are you ready {props.name}!! </h2>
                     <p>Please select from the options below and then click Start Quiz</p>
                 </div>
-                    <div className="options">
-                        <label className="start-label" htmlFor="categories">
-                        Select a category:
-                    </label>
-                        <select 
-                            id="categories" 
-                            value={selectedOptions.catagory}
-                            name="categories"
-                            onChange={handleChange}
-                            >
-                            {optionElements}
-                        </select>
-                    </div>
-                    <div className="options">
-                        <label className="start-label" htmlFor="noOfQuestions">
-                        Select the number of questions:
-                        </label>
-                        <select 
-                            id="noOfQuestions" 
-                            value={selectedOptions.noOfQuestions}
-                            name="noOfQuestions"
-                            onChange={handleChange}
-                            >
-                            <option value="5">5</option>
-                            <option value="10">10</option>
-                            <option value="15">15</option>
-                        </select>
-                    </div>
-                    <div className="options">
-                        <label className="start-label" htmlFor="difficulty">
-                        Select the difficulty of the questions:
-                        </label>
-                        <select 
-                            id="difficulty" 
-                            value={selectedOptions.difficulty}
-                            name="difficulty"
-                            onChange={handleChange}
-                            >
-                            <option value="">Mixed</option>
-                            <option value="easy">Easy</option>
-                            <option value="medium">Medium</option>
-                            <option value="hard">Hard</option>
-                        </select>
-                    </div>
-                </div>
-                <button className="all-buttons" onClick={()=> props.onClickHandler(true, selectedOptions, props.name)}>Start Quiz</button>
+                <Select 
+                    divClassName={"options"}
+                    classname={"start-label"}
+                    htmlfor={"categories"}
+                    labelText={"Select a category:"}
+                    id={"categories"}
+                    value={selectedOptions.category}
+                    name={"categories"}
+                    onChange={handleChange}
+                    selectText={createOptionELements(categoryList)}
+                />
+
+                <Select 
+                    divClassName={"options"}
+                    classname={"start-label"}
+                    htmlfor={"noOfQuestions"}
+                    labelText={"Select the number of questions:"}
+                    id={"noOfQuestions"}
+                    value={selectedOptions.noOfQuestions}
+                    name={"noOfQuestions"}
+                    onChange={handleChange}
+                    selectText={createOptionELements(noOfQuestions)}
+                />
+                 <Select 
+                    divClassName={"options"}
+                    classname={"start-label"}
+                    htmlfor={"difficulty"}
+                    labelText={"Select the difficulty of the questions:"}
+                    id={"difficulty"}
+                    value={selectedOptions.difficulty}
+                    name={"difficulty"}
+                    onChange={handleChange}
+                    selectText={createOptionELements(difficulty)}
+                />
+            </div>
+                <Button 
+                    classname={"all-buttons"}
+                    onClickHandler={()=> props.onClickHandler(true, selectedOptions, props.name)}
+                    buttonText={"Start Quiz"}
+                />
+                
         </Fragment>
     )
 }

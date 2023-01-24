@@ -1,8 +1,14 @@
+import Button from "../button/button.component"
 
 const CheckAnswers = (props) => {
     return(
         <div className="button-container">
-            <button className="all-buttons" onClick={()=> props.onClickHandler()}>Check Answers</button>
+            <Button 
+                classname={"all-buttons"}
+                onClickHandler={()=> props.onClickHandler()}
+                buttonText={"Check Answers"}
+            />
+            
         </div>
         
     )
