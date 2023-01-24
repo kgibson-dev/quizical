@@ -47,10 +47,11 @@ const QuizOptions = (props) => {
     
     return (
         <Fragment>
-            <h2 className="quiz-subtitle">Are you ready {props.name}!! </h2>
-                <p>Please select from the options below and then click Start Quiz</p>
-            
-                <div className="options-container">
+            <div className="options-container">
+                <div className="subtitle-container">
+                    <h2 className="quiz-subtitle">Are you ready {props.name}!! </h2>
+                    <p>Please select from the options below and then click Start Quiz</p>
+                </div>
                     <div className="options">
                         <label className="start-label" htmlFor="categories">
                         Select a category:
